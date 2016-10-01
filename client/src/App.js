@@ -19,7 +19,7 @@ $.ajax({
   render() {
     return (
       <div id="main">
-        {data.project !== null ? <Layers layers={data.project.layers.reverse()}/> : null}
+        {data.project !== null ? <Layers layers={data.project.layers}/> : null}
         {/*<pre>{JSON.stringify(data.project, null, 2)}</pre>*/}
       </div>
     );
