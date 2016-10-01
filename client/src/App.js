@@ -5,12 +5,23 @@ import $ from "jquery";
 
 // import DevTools from 'mobx-react-devtools';
 
-let data = observable({project: null});
+let data = observable({project: null, arrows: null});
 
 $.ajax({
   url: "http://0.0.0.0:3001/projects/1.json",
   dataType: "json",
   success: (response) => {
+    data.nodeIds = {};
+    var i = 1;
+    for (var source in response.dependencies) {
+      for (var j = 0; j < response.dependencies[source].length; j++) {
+        const target = response.dependencies[source][j];
+        if (data.nodeIds[target] === undefined) {
+          data.nodeIds[target] = i
+          i++;
+        }
+      }
+    }
     data.project = response;
   }
 })
@@ -20,6 +31,7 @@ $.ajax({
     return (
       <div id="main">
         {data.project !== null ? <Layers layers={data.project.layers}/> : null}
+        {(data.arrows !== null && data.project !== null) ? <Arrows arrows={data.arrows}/> : null}
         {/*<pre>{JSON.stringify(data.project, null, 2)}</pre>*/}
       </div>
     );
@@ -58,6 +70,24 @@ $.ajax({
   handleSelect(node) {
     this.selectedNode = node
   }
+  componentDidMount() {
+    updateArrows();
+  }
+  componentDidUpdate() {
+    updateArrows();
+  }
+}
+
+$(() => {
+  $(window).resize(() => {
+    updateArrows();
+  })
+})
+
+function updateArrows() {
+  const offset = $('.node:first').offset();
+  console.log(offset);
+  data.arrows = offset;
 }
 
 class Node extends Component {
@@ -77,7 +107,8 @@ class Node extends Component {
       }
     }
     return (
-      <div className={classNames.join(' ')}
+      <div id={`node-${data.nodeIds[this.props.node]}`}
+           className={classNames.join(' ')}
            onClick={this.props.onSelect.bind(this, this.props.node)}>
          <span className="distance-in">{distanceIn}</span>
          <span className="name">{this.props.node}</span>
@@ -87,8 +118,58 @@ class Node extends Component {
   }
 }
 
-// Components:
-// * Layer
-// * Cluster
-// * Module (js file) - can hover
-// * Edge (js file to js file) - can be highlighted
+@observer class Arrows extends Component {
+  render() {
+    const $container = $('#layers');
+    const containerOffset = $container.offset();
+    return (
+      <svg version="1.1"
+           baseProfile="full"
+           style={{
+             position: 'absolute',
+             top: containerOffset.top,
+             left: containerOffset.left,
+             pointerEvents: 'none'
+           }}
+           width={$container.width()}
+           height={$container.height()}
+           xmlns="http://www.w3.org/2000/svg">
+        {/*<rect width="100%" height="100%" fill="rgba(0,0,127,0.5)" />*/}
+        {
+          Object.keys(data.project.dependencies).map((source) => (
+            data.project.dependencies[source].map((target) => {
+              const $node1 = $(`#node-${data.nodeIds[source]}`);
+              const $node2 = $(`#node-${data.nodeIds[target]}`);
+
+              return (
+                // <Arrow source={source} target={target} containerOffset={containerOffset}/>
+                <line x1={$node1.offset().left - containerOffset.left + $node1.outerWidth()}
+                      x2={$node2.offset().left - containerOffset.left}
+                      y1={$node1.offset().top - containerOffset.top + $node1.outerHeight()/2}
+                      y2={$node2.offset().top - containerOffset.top + $node1.outerHeight()/2}
+                      stroke="rgba(0,0,0,0.5)" fill="transparent" strokeWidth="1"/>
+
+              )
+            })
+          ))
+        }
+
+      </svg>
+    )
+    return (
+      <div style={{position: 'absolute', top: `${this.props.arrows.top}px`, left: `${this.props.arrows.left}px`}}>
+        Arrows
+      </div>
+    )
+  }
+}
+
+// class Arrow extends Component {
+//   render() {
+//     const containerOffset = this.props.containerOffset;
+//     const $node1 = $(`#node-${this.props.source}`);
+//     const $node2 = $(`#node-${this.props.target}`);
+//     return (
+//     )
+//   }
+// }
