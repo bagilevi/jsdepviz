@@ -14,6 +14,7 @@ module.exports = function(app) {
         dependencies: dependencies,
         layers: layers
       }
+      res.header('Access-Control-Allow-Origin', '*');
       res.send(JSON.stringify(project, null, 2));
     });
 
