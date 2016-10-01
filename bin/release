@@ -1,0 +1,8 @@
+#!/bin/sh
+env WEBPACK_ENV=production webpack --progress -p
+yes | cp -r dist/* ../dependency-visualizer-gh-pages/
+yes | cp index.html ../dependency-visualizer-gh-pages/
+cd ../dependency-visualizer-gh-pages
+git add -A
+git commit -m "release $(date "+%Y-%m-%d %H:%I:%S")"
+git push origin gh-pages
