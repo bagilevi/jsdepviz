@@ -33,8 +33,6 @@ app.get('/', function response(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-require('./server/main')(app);
-
 app.listen(port, '0.0.0.0', function onStart(err) {
   if (err) {
     console.log(err);

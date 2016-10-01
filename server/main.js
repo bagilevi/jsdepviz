@@ -1,16 +1,20 @@
+var bodyParser = require('body-parser');
 var jsModuleDependecies = require('js-module-dependencies');
 var layerizer = require('layerizer');
 var graphlib = require('graphlib');
 
 module.exports = function(app) {
-  var bodyParser = require('body-parser');
   app.use(bodyParser.json());
 
   app.get('/projects/1.json', function (req, res) {
     jsModuleDependecies.getModuleDependenciesInProject('/Users/lev/tmp/react-dnd/src', function(dependencies) {
       var graph = convertDependenciesToGraph(dependencies);
       var layers = layerizer.layerize(graph);
-      res.send(JSON.stringify(layers, null, 2));
+      var project = {
+        dependencies: dependencies,
+        layers: layers
+      }
+      res.send(JSON.stringify(project, null, 2));
     });
 
   });

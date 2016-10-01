@@ -1,0 +1,27 @@
+{
+  "name": "dependency-visualizer-server",
+  "version": "1.0.0",
+  "description": "Shows module dependencies within a JavaScript project",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bagilevi/dependency-visualizer.git"
+  },
+  "keywords": [],
+  "author": "Levente Bagi <bagilevi@gmail.com> (http://github.com/bagilevi)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bagilevi/dependency-visualizer/issues"
+  },
+  "homepage": "https://github.com/bagilevi/dependency-visualizer",
+  "dependencies": {
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "express": "^4.14.0",
+    "graphlib": "^2.1.1",
+    "js-module-dependencies": "0.0.1",
+    "layerizer": "0.0.1"
+  }
+}
