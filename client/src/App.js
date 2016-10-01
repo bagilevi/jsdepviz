@@ -41,6 +41,7 @@ $.ajax({
                       cluster.map((node, nodeIndex) => (
                         <Node node={node}
                               selected={node == this.selectedNode}
+                              selectedNode={this.selectedNode}
                               key={nodeIndex}
                               onSelect={this.handleSelect.bind(this)}/>
                       ))
@@ -61,16 +62,26 @@ $.ajax({
 
 class Node extends Component {
   render() {
-    let style = {};
+    let classNames = ["node"];
+    let distance, distanceIn, distanceOut;
     if (this.props.selected) {
-      style.color = '#FFF';
-      style.backgroundColor = '#249';
+      classNames.push('selected');
+    }
+    else if (this.props.selectedNode !== undefined) {
+      distanceOut = data.project.distances[this.props.node][this.props.selectedNode].distance;
+      distanceIn = data.project.distances[this.props.selectedNode][this.props.node].distance;
+      distance = distanceIn === null ? distanceOut : distanceIn
+      if (distance !== null) {
+        classNames.push('connected');
+        classNames.push("connected-" + distance);
+      }
     }
     return (
-      <div className="node"
-           style={style}
+      <div className={classNames.join(' ')}
            onClick={this.props.onSelect.bind(this, this.props.node)}>
-        {this.props.node}
+         <span className="distance-in">{distanceIn}</span>
+         <span className="name">{this.props.node}</span>
+         <span className="distance-out">{distanceOut}</span>
       </div>
     )
   }

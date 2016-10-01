@@ -3,6 +3,10 @@ var jsModuleDependecies = require('js-module-dependencies');
 var layerizer = require('layerizer');
 var graphlib = require('graphlib');
 
+function getDistances(graph) {
+  return graphlib.alg.dijkstraAll(graph);
+}
+
 module.exports = function(app) {
   app.use(bodyParser.json());
 
@@ -12,7 +16,8 @@ module.exports = function(app) {
       var layers = layerizer.layerize(graph);
       var project = {
         dependencies: dependencies,
-        layers: layers
+        layers: layers,
+        distances: getDistances(graph)
       }
       res.header('Access-Control-Allow-Origin', '*');
       res.send(JSON.stringify(project, null, 2));

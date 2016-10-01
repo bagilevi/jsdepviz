@@ -36,6 +36,7 @@ body
       border-radius: 1em
 
       .node
+        display: flex
         background-color: white
         margin: .5em
         padding: .25em 1em
@@ -43,3 +44,21 @@ body
         font-family: monospace
         border-radius: .5em
         cursor: pointer
+        &.selected
+          color: #FFF
+          background: #249
+        &.connected
+          background: mix(mix(#249, #CEF, 20%), white)
+        &.connected-1
+          background: mix(#249, #CEF, 66%)
+          color: white
+        .name
+          flex: 1
+        .distance-in, .distance-out
+          display: inline-block
+          width: 2em
+          opacity: 0.5
+        .distance-in
+          text-align: left
+        .distance-out
+          text-align: right
