@@ -32,6 +32,9 @@ app.use(express.static(__dirname + '/dist'));
 app.get('/', function response(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+app.get('/repos/*', function response(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 app.listen(port, '0.0.0.0', function onStart(err) {
   if (err) {

@@ -11,26 +11,31 @@ let data = observable({
   arrows: null,
 });
 
-$.ajax({
-  url: "http://0.0.0.0:3001/projects/1.json",
-  dataType: "json",
-  success: (response) => {
-    data.nodeIds = {};
-    var i = 1;
-    for (var source in response.dependencies) {
-      for (var j = 0; j < response.dependencies[source].length; j++) {
-        const target = response.dependencies[source][j];
-        if (data.nodeIds[target] === undefined) {
-          data.nodeIds[target] = i
-          i++;
+function retrieveProject(user, repo) {
+  $.ajax({
+    url: `http://0.0.0.0:3001/projects/github/${user}/${repo}.json`,
+    dataType: "json",
+    success: (response) => {
+      data.nodeIds = {};
+      var i = 1;
+      for (var source in response.dependencies) {
+        for (var j = 0; j < response.dependencies[source].length; j++) {
+          const target = response.dependencies[source][j];
+          if (data.nodeIds[target] === undefined) {
+            data.nodeIds[target] = i
+            i++;
+          }
         }
       }
+      data.project = response;
     }
-    data.project = response;
-  }
-})
+  })
+}
 
 @observer export default class App extends Component {
+  componentDidMount() {
+    retrieveProject(this.props.params.user, this.props.params.repo);
+  }
   render() {
     return (
       <div id="main">
