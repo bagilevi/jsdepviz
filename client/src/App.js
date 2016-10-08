@@ -5,7 +5,11 @@ import $ from "jquery";
 
 // import DevTools from 'mobx-react-devtools';
 
-let data = observable({project: null, arrows: null});
+let data = observable({
+  project: null,
+  selectedNode: undefined,
+  arrows: null,
+});
 
 $.ajax({
   url: "http://0.0.0.0:3001/projects/1.json",
@@ -39,7 +43,6 @@ $.ajax({
 }
 
 @observer class Layers extends Component {
-  @observable selectedNode;
   render() {
     return (
       <div id="layers">
@@ -52,8 +55,8 @@ $.ajax({
                     {
                       cluster.map((node, nodeIndex) => (
                         <Node node={node}
-                              selected={node == this.selectedNode}
-                              selectedNode={this.selectedNode}
+                              selected={node == data.selectedNode}
+                              selectedNode={data.selectedNode}
                               key={nodeIndex}
                               onSelect={this.handleSelect.bind(this)}/>
                       ))
@@ -68,7 +71,7 @@ $.ajax({
     );
   }
   handleSelect(node) {
-    this.selectedNode = node
+    data.selectedNode = node
   }
   componentDidMount() {
     updateArrows();
