@@ -11,9 +11,9 @@ body
 
 body
   display: flex
-  justify-content: center
+  // justify-content: center
   align-items: center
-  height: 100vh
+  min-height: 100vh
 
 #layers
   margin: 1em
@@ -44,6 +44,7 @@ body
         font-family: monospace
         border-radius: .5em
         cursor: pointer
+        position: relative
         &.selected
           color: #FFF
           background: #249
@@ -52,16 +53,29 @@ body
         &.connected-1
           background: mix(#249, #CEF, 66%)
           color: white
-        .name
+        .path-and-name
           flex: 1
+          .path
+            display: block
+            font-size: 90%
+            opacity: 0.7
+          .name
+            font-weight: bolder
         .distance-in, .distance-out
-          display: inline-block
+          position: absolute
+          display: block
           width: 2em
           opacity: 0.5
+          font-size: 90%
+          padding: 0.2em
+          top: 0
+          bottom: 0
         .distance-in
           text-align: left
+          left: -1.5em
         .distance-out
           text-align: right
+          right: -1.5em
 
 #status
   position: absolute

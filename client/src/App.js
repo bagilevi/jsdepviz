@@ -26,6 +26,10 @@ function retrieveProject(user, repo) {
       data.nodeIds = {};
       var i = 1;
       for (var source in response.dependencies) {
+        if (data.nodeIds[source] === undefined) {
+          data.nodeIds[source] = i
+          i++;
+        }
         for (var j = 0; j < response.dependencies[source].length; j++) {
           const target = response.dependencies[source][j];
           if (data.nodeIds[target] === undefined) {
@@ -140,12 +144,19 @@ class Node extends Component {
         classNames.push("connected-" + distance);
       }
     }
+    var path = this.props.node.split('/');
+    var name = path.pop();
+    path = path.join('/');
+    if (path.length) path = path += '/';
     return (
       <div id={`node-${data.nodeIds[this.props.node]}`}
            className={classNames.join(' ')}
            onClick={this.props.onSelect.bind(this, this.props.node)}>
          <span className="distance-in">{distanceIn}</span>
-         <span className="name">{this.props.node}</span>
+         <span className="path-and-name">
+           <span className="path">{path}</span>
+           <span className="name">{name}</span>
+         </span>
          <span className="distance-out">{distanceOut}</span>
       </div>
     )
