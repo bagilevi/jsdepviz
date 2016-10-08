@@ -1,5 +1,5 @@
 {
-  "name": "dependency-visualizer-server",
+  "name": "jsdepviz-server",
   "version": "1.0.0",
   "description": "Shows module dependencies within a JavaScript project",
   "scripts": {
@@ -7,15 +7,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bagilevi/dependency-visualizer.git"
+    "url": "https://github.com/bagilevi/jsdepviz.git"
   },
   "keywords": [],
   "author": "Levente Bagi <bagilevi@gmail.com> (http://github.com/bagilevi)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bagilevi/dependency-visualizer/issues"
+    "url": "https://github.com/bagilevi/jsdepviz/issues"
   },
-  "homepage": "https://github.com/bagilevi/dependency-visualizer",
+  "homepage": "https://github.com/bagilevi/jsdepviz",
   "dependencies": {
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-preset-stage-0": "^6.16.0",

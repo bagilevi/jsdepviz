@@ -1,11 +1,8 @@
-# dependency-visualizer
+# jsdepviz
 
-Boilerplate with Babel, Webpack, React, MobX, and an Express backend.
+Visualize module dependencies within a JavaScript project.
 
-### Usage
+Takes a GitHub URL, finds JavaScript modules, finds dependencies based on the `import` statements,
+arranges modules into layers, and displays layers and connections between modules as an interactive diagram.
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+Work in progress.
