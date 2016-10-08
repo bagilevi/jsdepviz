@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {observable} from 'mobx';
+import {observable, computed} from 'mobx';
 import {observer} from 'mobx-react';
 import $ from "jquery";
 
@@ -137,22 +137,23 @@ class Node extends Component {
            width={$container.width()}
            height={$container.height()}
            xmlns="http://www.w3.org/2000/svg">
-        {/*<rect width="100%" height="100%" fill="rgba(0,0,127,0.5)" />*/}
         {
           Object.keys(data.project.dependencies).map((source) => (
             data.project.dependencies[source].map((target) => {
               const $node1 = $(`#node-${data.nodeIds[source]}`);
               const $node2 = $(`#node-${data.nodeIds[target]}`);
+              const visible = data.selectedNode == source || data.selectedNode == target;
 
-              return (
-                // <Arrow source={source} target={target} containerOffset={containerOffset}/>
-                <line x1={$node1.offset().left - containerOffset.left + $node1.outerWidth()}
-                      x2={$node2.offset().left - containerOffset.left}
-                      y1={$node1.offset().top - containerOffset.top + $node1.outerHeight()/2}
-                      y2={$node2.offset().top - containerOffset.top + $node1.outerHeight()/2}
-                      stroke="rgba(0,0,0,0.5)" fill="transparent" strokeWidth="1"/>
+              if (visible) {
+                return (
+                  <line x1={$node1.offset().left - containerOffset.left + $node1.outerWidth()}
+                        x2={$node2.offset().left - containerOffset.left}
+                        y1={$node1.offset().top - containerOffset.top + $node1.outerHeight()/2}
+                        y2={$node2.offset().top - containerOffset.top + $node1.outerHeight()/2}
+                        stroke="rgba(0,0,0,0.5)" fill="transparent" strokeWidth="1"/>
 
-              )
+                )
+              }
             })
           ))
         }
@@ -166,13 +167,3 @@ class Node extends Component {
     )
   }
 }
-
-// class Arrow extends Component {
-//   render() {
-//     const containerOffset = this.props.containerOffset;
-//     const $node1 = $(`#node-${this.props.source}`);
-//     const $node2 = $(`#node-${this.props.target}`);
-//     return (
-//     )
-//   }
-// }
