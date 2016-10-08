@@ -1,4 +1,3 @@
-var bodyParser = require('body-parser');
 var jsModuleDependecies = require('js-module-dependencies');
 var layerizer = require('layerizer');
 var graphlib = require('graphlib');
@@ -11,8 +10,6 @@ function getDistances(graph) {
 }
 
 module.exports = function(app) {
-  app.use(bodyParser.json());
-
   app.get('/api/v1/repos/:user/:repo.json', function (req, res) {
     res.header('Access-Control-Allow-Origin', '*');
     function respondWithError(err) {
