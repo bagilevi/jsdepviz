@@ -31,7 +31,7 @@ export default @observer class Arrows extends Component {
                   <line x1={$node1.offset().left - containerOffset.left + $node1.outerWidth()}
                         x2={$node2.offset().left - containerOffset.left}
                         y1={$node1.offset().top - containerOffset.top + $node1.outerHeight()/2}
-                        y2={$node2.offset().top - containerOffset.top + $node1.outerHeight()/2}
+                        y2={$node2.offset().top - containerOffset.top + $node2.outerHeight()/2}
                         stroke="rgba(0,0,0,0.5)" fill="transparent" strokeWidth="1"/>
 
                 )
