@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const production = process.env.WEBPACK_ENV == 'production';
 const development = ! production;
@@ -28,7 +29,8 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin("style.css", { allChunks: true }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyWebpackPlugin([{from: './index.html', to: 'index.html'}])
   ],
   module: {
     loaders: [

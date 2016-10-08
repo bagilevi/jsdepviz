@@ -14,7 +14,7 @@ function getDistances(graph) {
 module.exports = function(app) {
   app.use(bodyParser.json());
 
-  app.get('/projects/github/:user/:repo.json', function (req, res) {
+  app.get('/api/v1/repos/:user/:repo.json', function (req, res) {
     res.header('Access-Control-Allow-Origin', '*');
     function respondWithError(err) {
       res.status(500).send(JSON.stringify({ error: err.message }));

@@ -1,9 +1,19 @@
 import $ from "jquery";
 
+function apiRoot() {
+  if (window.location.hostname == '0.0.0.0' ||
+      window.location.hostname == '127.0.0.1' ||
+      window.location.hostname == 'localhost') {
+    return 'http://0.0.0.0:3001';
+  } else {
+    return window.location.origin;
+  }
+}
+
 export default function retrieveProject(user, repo, data) {
   data.status.message = 'Retrieving project...';
   $.ajax({
-    url: `http://0.0.0.0:3001/projects/github/${user}/${repo}.json`,
+    url: `${apiRoot()}/api/v1/repos/${user}/${repo}.json`,
     dataType: "json",
     success: (response) => {
       data.status.message = 'Preparing data...';
@@ -27,7 +37,7 @@ export default function retrieveProject(user, repo, data) {
       data.status.done = true;
     },
     error: (response) => {
-      data.status.message = response.responseJSON.error;
+      data.status.message = (response.responseJSON ? response.responseJSON.error : JSON.stringify(response));
       data.status.error = true;
     }
   })
