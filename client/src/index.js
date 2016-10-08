@@ -12,7 +12,10 @@ function projectFromPath(path) {
 }
 
 let state = observable({ params: { project: projectFromPath(window.location.pathname) } });
-window.state = state;
+
+window.onpopstate = () => {
+  state.params.project = projectFromPath(window.location.pathname);
+}
 
 
 @observer class Router extends Component {
