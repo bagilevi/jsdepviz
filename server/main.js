@@ -1,6 +1,5 @@
 var bodyParser = require('body-parser');
-// var jsModuleDependecies = require('js-module-dependencies');
-var jsModuleDependecies = require('/Users/lev/Documents/code/personal/dependency-visualiser/js-module-dependencies/index.js');
+var jsModuleDependecies = require('js-module-dependencies');
 var layerizer = require('layerizer');
 var graphlib = require('graphlib');
 var gitRepoRetriever = require('./git-repo-retriever');
