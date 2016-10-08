@@ -15,14 +15,14 @@ function getRepoFromGithub(user, repo, ref, dataDir, callback) {
   var localPath = `${dataDir}/github/${user}/${repo}/${refOrTemp}`;
 
   if (fileExistsSync(localPath)) {
-    callback(localPath);
+    callback(null, localPath);
   }
   else {
     Git.Clone(`https://github.com/${user}/${repo}`, localPath)
       .then(function(repo) {
-        callback(localPath)
+        callback(null, localPath)
       })
-      .catch(function(err) { console.log(err); });
+      .catch(function(err) { console.log(err); callback({message: "Could not retrieve repository."}) });
   }
 }
 

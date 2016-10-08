@@ -6,16 +6,23 @@ import $ from "jquery";
 // import DevTools from 'mobx-react-devtools';
 
 let data = observable({
+  status: {
+    message: 'Loading...',
+    error: false,
+    done: false
+  },
   project: null,
   selectedNode: undefined,
   arrows: null,
 });
 
 function retrieveProject(user, repo) {
+  data.status.message = 'Retrieving project...';
   $.ajax({
     url: `http://0.0.0.0:3001/projects/github/${user}/${repo}.json`,
     dataType: "json",
     success: (response) => {
+      data.status.message = 'Preparing data...';
       data.nodeIds = {};
       var i = 1;
       for (var source in response.dependencies) {
@@ -28,6 +35,12 @@ function retrieveProject(user, repo) {
         }
       }
       data.project = response;
+      data.status.message = 'Done.';
+      data.status.done = true;
+    },
+    error: (response) => {
+      data.status.message = response.responseJSON.error;
+      data.status.error = true;
     }
   })
 }
@@ -39,11 +52,24 @@ function retrieveProject(user, repo) {
   render() {
     return (
       <div id="main">
+        <Status status={data.status} />
         {data.project !== null ? <Layers layers={data.project.layers}/> : null}
         {(data.arrows !== null && data.project !== null) ? <Arrows arrows={data.arrows}/> : null}
         {/*<pre>{JSON.stringify(data.project, null, 2)}</pre>*/}
       </div>
     );
+  }
+}
+
+@observer class Status extends Component {
+  render() {
+    const status = this.props.status;
+    if (status.done) return null;
+    return (
+      <div id="status" className={status.error ? "error" : null}>
+        {this.props.status.message}
+      </div>
+    )
   }
 }
 

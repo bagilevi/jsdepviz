@@ -15,21 +15,29 @@ module.exports = function(app) {
   app.use(bodyParser.json());
 
   app.get('/projects/github/:user/:repo.json', function (req, res) {
-    var user = req.params.user;
-    var repo = req.params.repo;
-    gitRepoRetriever.getRepoFromGithub(user, repo, null, repoDir, (path) => {
-      jsModuleDependecies.getModuleDependenciesInProject(path, function(dependencies) {
-        var graph = convertDependenciesToGraph(dependencies);
-        var layers = layerizer.layerize(graph);
-        var project = {
-          dependencies: dependencies,
-          layers: layers,
-          distances: getDistances(graph)
-        }
-        res.header('Access-Control-Allow-Origin', '*');
-        res.send(JSON.stringify(project, null, 2));
-      });
-    })
+    res.header('Access-Control-Allow-Origin', '*');
+    function respondWithError(err) {
+      res.status(500).send(JSON.stringify({ error: err.message }));
+    }
+    try {
+      var user = req.params.user;
+      var repo = req.params.repo;
+      gitRepoRetriever.getRepoFromGithub(user, repo, null, repoDir, (err, path) => {
+        if (err) return respondWithError(err);
+        jsModuleDependecies.getModuleDependenciesInProject(path, function(dependencies) {
+          var graph = convertDependenciesToGraph(dependencies);
+          var layers = layerizer.layerize(graph);
+          var project = {
+            dependencies: dependencies,
+            layers: layers,
+            distances: getDistances(graph)
+          }
+          res.send(JSON.stringify(project, null, 2));
+        });
+      })
+    } catch (e) {
+      respondWithError(e);
+    }
   });
 }
 
