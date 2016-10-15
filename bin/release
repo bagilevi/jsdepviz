@@ -1,17 +1,9 @@
 #!/bin/sh
 cd client
 env WEBPACK_ENV=production webpack --progress -p
-scp -r dist root@jslay.jkl.me:/srv/jslay/dist
+scp -r dist root@jsdepviz.jkl.me:/srv/jsdepviz
 
 cd ../server
-ssh root@jslay.jkl.me "mkdir -p /srv/jslay/server"
-scp -r main.js package.json git-repo-retriever.js server.js root@jslay.jkl.me:/srv/jslay/server
-ssh root@jslay.jkl.me "cd /srv/jslay/server; npm install && npm start"
-
-
-# yes | cp -r dist/* ../jsdepviz-gh-pages/
-# yes | cp index.html ../jsdepviz-gh-pages/
-# cd ../jsdepviz-gh-pages
-# git add -A
-# git commit -m "release $(date "+%Y-%m-%d %H:%I:%S")"
-# git push origin gh-pages
+ssh root@jsdepviz.jkl.me "mkdir -p /srv/jsdepviz/server"
+scp -r main.js package.json git-repo-retriever.js server.js root@jsdepviz.jkl.me:/srv/jsdepviz/server
+ssh root@jsdepviz.jkl.me "systemctl restart jsdepviz.service"
