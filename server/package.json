@@ -23,6 +23,7 @@
     "graphlib": "^2.1.1",
     "js-module-dependencies": "0.0.2",
     "layerizer": "0.0.2",
-    "nodegit": "^0.16.0"
+    "nodegit": "^0.16.0",
+    "redis": "^2.6.2"
   }
 }
