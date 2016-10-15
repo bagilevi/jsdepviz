@@ -7,7 +7,6 @@ import { browserHistory } from 'react-router'
 import Arrows from './ui/Arrows';
 import Layers from './ui/Layers';
 import Status from './ui/Status';
-import GithubRepoForm from './ui/GithubRepoForm';
 import retrieveProject from './data/retrieveProject';
 
 // import DevTools from 'mobx-react-devtools';
@@ -44,9 +43,6 @@ export default @observer class App extends Component {
   render() {
     return (
       <div id="main">
-        <header>
-          <GithubRepoForm onEntry={this.handleEntry.bind(this)} />
-        </header>
         <div id="content">
           {data.status.done
             ?
@@ -62,19 +58,6 @@ export default @observer class App extends Component {
   }
   handleReRender() {
     updateArrows();
-  }
-  handleEntry(value) {
-    const regex = new RegExp('\s*https:\/\/github.com/([^\/]+)/([^\/]+).*')
-    var matches = value.match(regex);
-    if (matches) {
-      this.props.navigator.setProject(`${matches[1]}/${matches[2]}`);
-      return;
-    }
-    matches = value.match(new RegExp('\s*([^\/]+)/([^\/]+)\s*'));
-    if (matches) {
-      this.props.navigator.setProject(`${matches[1]}/${matches[2]}`);
-      return;
-    }
   }
 }
 

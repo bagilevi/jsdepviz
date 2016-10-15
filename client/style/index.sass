@@ -1,5 +1,7 @@
+$bgcolor: #EEE
+
 body
-  background: #EEE
+  background: $bgcolor
   font-size: 12px
   margin: 0
   padding: 0
@@ -26,9 +28,35 @@ body
   flex-direction: column
 
 header
-  position: fixed
-  top: 0
-  left: 0
+  width: 100vw
+  display: flex
+  align-items: center
+  background: mix(#334, $bgcolor, 10%)
+  #logo
+    display: block
+    padding: 0.7rem 1rem
+    color: #FFF
+    background-color: #334
+    font-family: monospace
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 6rem
+    .title
+      font-size: 1rem
+      letter-spacing: 0.1rem
+    .explanation
+      font-size: 90%
+      margin-top: .5em
+      opacity: 0.9
+      text-align: center
+      letter-spacing: 0.22em
+
+.contents
+  min-height: 100vh
+  min-width: 100vw
+  display: flex
+  flex-direction: column
 
 #content
   margin-top: 3em
