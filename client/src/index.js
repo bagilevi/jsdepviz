@@ -39,6 +39,12 @@ window.onpopstate = () => {
           </div>
           <GithubRepoForm project={state.project} onProjectChange={this.handleProjectChange.bind(this)} />
           <ExampleRepoPicker onProjectChange={this.handleProjectChange.bind(this)} />
+          <div id="about">
+            <ul className="menu">
+              <li><a href="https://github.com/bagilevi/jsdepviz">Source Code</a></li>
+              <li><a href="http://levente.bagi.name">Author</a></li>
+            </ul>
+          </div>
         </header>
         <div className="contents">
           {

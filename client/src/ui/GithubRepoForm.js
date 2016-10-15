@@ -13,10 +13,15 @@ export default @observer class GithubRepoForm extends Component {
     return (
       <div id="github-repo-form">
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <input onBlur={this.handleBlur.bind(this)}
-                 placeholder="GitHub URL or user/repo"
-                 value={this.project || this.props.project}
-                 onChange={this.handleChange.bind(this)}/>
+          <div className="label">
+            <label for="github-repo-input">GitHub repository:</label>
+          </div>
+          <div className="input">
+            <input id="github-repo-input"
+                   onBlur={this.handleBlur.bind(this)}
+                   value={this.project || this.props.project}
+                   onChange={this.handleChange.bind(this)}/>
+          </div>
         </form>
       </div>
     );
