@@ -37,7 +37,7 @@ window.onpopstate = () => {
             <div className="title">JsDepViz</div>
             <div className="explanation">JavaScript Dependency Vizualizer</div>
           </div>
-          <GithubRepoForm onEntry={this.handleEntry.bind(this)} />
+          <GithubRepoForm project={state.params.project} onProjectChange={this.handleProjectChange.bind(this)} />
         </header>
         <div className="contents">
           {
@@ -49,18 +49,8 @@ window.onpopstate = () => {
       </div>
     );
   }
-  handleEntry(value) {
-    const regex = new RegExp('\s*https:\/\/github.com/([^\/]+)/([^\/]+).*')
-    var matches = value.match(regex);
-    if (matches) {
-      this.navigator.setProject(`${matches[1]}/${matches[2]}`);
-      return;
-    }
-    matches = value.match(new RegExp('\s*([^\/]+)/([^\/]+)\s*'));
-    if (matches) {
-      this.navigator.setProject(`${matches[1]}/${matches[2]}`);
-      return;
-    }
+  handleProjectChange(value) {
+    this.navigator.setProject(value);
   }
 }
 
