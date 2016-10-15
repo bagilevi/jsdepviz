@@ -6,4 +6,5 @@ scp -r dist root@jsdepviz.jkl.me:/srv/jsdepviz
 cd ../server
 ssh root@jsdepviz.jkl.me "mkdir -p /srv/jsdepviz/server"
 scp -r main.js package.json git-repo-retriever.js server.js root@jsdepviz.jkl.me:/srv/jsdepviz/server
+ssh root@jsdepviz.jkl.me "cd /srv/jsdepviz/server; npm install"
 ssh root@jsdepviz.jkl.me "systemctl restart jsdepviz.service"

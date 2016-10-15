@@ -35,7 +35,7 @@ window.onpopstate = () => {
         <header>
           <div id="logo">
             <div className="title">JsDepViz</div>
-            <div className="explanation">JavaScript Dependency Vizualizer</div>
+            <div className="explanation">JavaScript Dependency Visualizer</div>
           </div>
           <GithubRepoForm project={state.project} onProjectChange={this.handleProjectChange.bind(this)} />
           <ExampleRepoPicker onProjectChange={this.handleProjectChange.bind(this)} />
